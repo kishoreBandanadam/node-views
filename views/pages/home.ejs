@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include('../partials/head'); %>
+	</head>
+	<body>
+		<header>
+			<%- include('../partials/header'); %>
+		</header>
+
+		<main>
+			<ul>
+				<% users.forEach(function(user){ %> 
+					<% console.log(user);%>
+					<li><%= user %> </li>
+				<% }); %>
+			</ul>
+		</main>
+		
+		<footer>
+			<%- include('../partials/footer'); %>
+		</footer>		
+	</body>
+</html>

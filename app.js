@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 
 const fs = require('fs');
 
-
+app.use(express.json());
 
 
 let students = [
@@ -60,7 +60,14 @@ app.get('/about', (req, res) => {
 	});
 });
 
-app.get('/api/generate-pdf', (req, res) => {
+app.post('/hello', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+});
+
+
+app.post('/api/generate-pdf', (req, res) => {
+    console.log("$$req", req.body);
     // console.log('__dirname', __dirname);
     // console.log('path', path.join(__dirname, './views/', 'pages/report-template.ejs'));
     ejs.renderFile(path.join(__dirname, './views/', 'pages/report-template.ejs'), {
@@ -89,6 +96,10 @@ app.get('/api/generate-pdf', (req, res) => {
                     //res.download('report.pdf');
                     //res.send("File created successfully");
 
+                    //download file
+                    //res.download('report.pdf');
+
+                    //send file
                     var fileName = path.join(__dirname, '/report.pdf'); 
                     console.log("fileName", fileName);
                     res.sendFile(fileName, options, function (err) { 

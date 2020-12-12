@@ -66,7 +66,7 @@ app.get('/hello', (req, res) => {
 });
 
 
-app.get('/api/generate-pdf', (req, res) => {
+app.post('/api/generate-pdf', (req, res) => {
     console.log("$$req", req.body);
     // console.log('__dirname', __dirname);
     // console.log('path', path.join(__dirname, './views/', 'pages/report-template.ejs'));

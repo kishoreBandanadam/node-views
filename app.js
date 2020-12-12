@@ -5,6 +5,11 @@ const ejs = require('ejs');
 const pdf = require("html-pdf");
 const port = process.env.PORT || 3000;
 
+const fs = require('fs');
+
+
+
+
 let students = [
     {name: "Joy",
      email: "joy@example.com",
@@ -80,7 +85,19 @@ app.get('/api/generate-pdf', (req, res) => {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.send("File created successfully");
+                    //const file = fs.createWriteStream("./report.pdf");
+                    //res.download('report.pdf');
+                    //res.send("File created successfully");
+
+                    var fileName = path.join(__dirname, '/report.pdf'); 
+                    console.log("fileName", fileName);
+                    res.sendFile(fileName, options, function (err) { 
+                        if (err) { 
+                            next(err); 
+                        } else { 
+                            console.log('Sent:', fileName); 
+                        } 
+                    }); 
                 }
             });
         }

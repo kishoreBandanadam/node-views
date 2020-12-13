@@ -8,22 +8,66 @@
             table, th, td {
                 border: 1px solid black;
             }
-            </style>
+        </style>
+        <!-- <link rel="stylesheet" type="text/css" href="/slds/styles/salesforce-lightning-design-system.css" /> -->
 	</head>
 	<body>
 
 		<main>
-			<div style="width: 85%; margin: 0 7.5%;">
-                <div style="text-align: center; padding-left: 50px;">            
-                    <h3>Student Report</h5>
-                    <table>
-                    <% if (students.length > 0) { %>
-                        <% students.forEach(student => {%>
-                           <tr><td><%= student.name %></td><td><%= student.email %></td><td><%= student.city %></td><td><%=student.country %></td></tr>
-                        <%  });%>
-                    <% }%>
-                    </table>
-                 </div>
+            <h1 style="text-align: center; padding-left: 50px;">
+                Report
+            </h1>
+            <div class="slds-p-around_x-small">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Account Name">
+                                    Name
+                                </div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Industry">
+                                    Email
+                                </div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Phone">City</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Phone">Country</div>
+                            </th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <% if (students.length > 0) { %>
+                            <% students.forEach(student => {%>
+                                <tr key={acc.Id} class="slds-hint-parent">
+                                    <td data-label="Prospecting">
+                                        <div class="slds-truncate" title="Account Name">
+                                            <%= student.name %>
+                                        </div>
+                                    </td>
+                                    <td data-label="Confidence">
+                                        <div class="slds-truncate" title="Industry">
+                                            <%= student.email %>
+                                        </div>
+                                    </td>
+                                    <td data-label="Confidence">
+                                        <div class="slds-truncate" title="Phone">
+                                            <%= student.city %>
+                                        </div>
+                                    </td>
+                                    <td data-label="Confidence">
+                                        <div class="slds-truncate" title="Phone">
+                                            <%= student.country %>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <%  });%>
+                        <% }%>
+                    </tbody>
+                </table>
             </div>
 		</main>	
 	</body>

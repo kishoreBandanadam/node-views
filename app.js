@@ -8,6 +8,10 @@ const port = process.env.PORT || 3000;
 
 const fs = require('fs');
 
+const SLDS_DIR = '/node_modules/@salesforce-ux/design-system/assets';
+ 
+app.use('/slds', express.static(__dirname + SLDS_DIR));
+
 app.use(express.json());
 
 
@@ -120,6 +124,104 @@ app.post('/api/generate-pdf', (req, res) => {
                             console.log('Sent:', fileName); 
                         } 
                     }); 
+                }
+            });
+        }
+        
+    });
+});
+
+app.get('/api/generate-pdf', (req, res) => {
+    console.log(__dirname);
+    console.log("$$req", req.body);
+
+    if(Array.isArray(req.body)) {
+        students = req.body;
+    }
+
+    ejs.renderFile(path.join(__dirname, './views/', 'pages/report-template.ejs'), {
+        students: students
+	}, (err, data) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            //res.send('pages/home');
+            let options = {
+                "height": "11.25in",
+                "width": "8.5in",
+                "header": {
+                    "height": "20mm"
+                },
+                "footer": {
+                    "height": "20mm",
+                },
+                "base" : path.join(__dirname,"/node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css"),
+            };
+            
+            pdf.create(data, options).toFile("report.pdf", function (err, data) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    //const file = fs.createWriteStream("./report.pdf");
+                    //res.download('report.pdf');
+                    //res.send("File created successfully");
+
+                    //download file
+                    //res.download('report.pdf');
+
+                    //send file
+                    var fileName = path.join(__dirname, '/report.pdf'); 
+                    console.log("fileName", fileName);
+                    res.sendFile(fileName, options, function (err) { 
+                        if (err) { 
+                            next(err); 
+                        } else { 
+                            console.log('Sent:', fileName); 
+                        } 
+                    }); 
+                }
+            });
+        }
+        
+    });
+});
+
+app.post('/api/generate-pdf', (req, res) => {
+
+    if ( req.header.Token === undefined && req.header('Token') !== process.env.TOKEN) {
+        res.send('Incorrect token');
+        return;
+    }
+
+    if(Array.isArray(req.body)) {
+        students = req.body;
+    }
+
+    ejs.renderFile(path.join(__dirname, './views/', 'pages/report-template.ejs'), {
+        students: students
+	}, (err, data) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            //res.send('pages/home');
+            let options = {
+                "height": "11.25in",
+                "width": "8.5in",
+                "header": {
+                    "height": "20mm"
+                },
+                "footer": {
+                    "height": "20mm",
+                },
+            };
+            pdf.create(data, options).toFile("report.pdf", function (err, data) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    //download file
+                    //res.download('report.pdf');
                 }
             });
         }

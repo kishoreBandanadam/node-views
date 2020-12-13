@@ -187,7 +187,7 @@ app.get('/api/generate-pdf', (req, res) => {
     });
 });
 
-app.post('/api/generate-pdf', (req, res) => {
+app.post('/api/download-pdf', (req, res) => {
 
     if ( req.header.Token === undefined && req.header('Token') !== process.env.TOKEN) {
         res.send('Incorrect token');
@@ -205,7 +205,6 @@ app.post('/api/generate-pdf', (req, res) => {
             console.log(err);
         }
         else {
-            //res.send('pages/home');
             let options = {
                 "height": "11.25in",
                 "width": "8.5in",
@@ -221,7 +220,7 @@ app.post('/api/generate-pdf', (req, res) => {
                     res.send(err);
                 } else {
                     //download file
-                    //res.download('report.pdf');
+                    res.download('report.pdf');
                 }
             });
         }

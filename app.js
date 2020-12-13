@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const ejs = require('ejs');
 const pdf = require("html-pdf");
+require('dotenv').config();
 const port = process.env.PORT || 3000;
 
 const fs = require('fs');
@@ -70,6 +71,12 @@ app.post('/api/generate-pdf', (req, res) => {
     console.log("$$req", req.body);
     // console.log('__dirname', __dirname);
     // console.log('path', path.join(__dirname, './views/', 'pages/report-template.ejs'));
+    console.log(req.header('Token'));
+    if ( req.header.Token === undefined && req.header('Token') !== process.env.TOKEN) {
+        res.send('Incorrect token');
+        return;
+    }
+
     if(Array.isArray(req.body)) {
         students = req.body;
     }

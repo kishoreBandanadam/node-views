@@ -15,7 +15,7 @@ app.use('/slds', express.static(__dirname + SLDS_DIR));
 app.use(express.json());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Token');
     next();
 });
 
@@ -161,7 +161,7 @@ app.get('/api/generate-pdf', (req, res) => {
                 "footer": {
                     "height": "20mm",
                 },
-                "base" : path.join(__dirname,"/node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css"),
+               // "base" : path.join(__dirname,"/node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css"),
             };
             
             pdf.create(data, options).toFile("report.pdf", function (err, data) {

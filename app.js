@@ -13,6 +13,10 @@ const SLDS_DIR = '/node_modules/@salesforce-ux/design-system/assets';
 app.use('/slds', express.static(__dirname + SLDS_DIR));
 
 app.use(express.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+});
 
 
 let students = [
